@@ -12,17 +12,18 @@ namespace Auth.Service.Services
 {
     public class AuthService : IAuthService
     {
-        private static readonly List<User> users = [];
         private readonly IConfiguration configuration;
+        private readonly IUserService userService;
 
-        public AuthService(IConfiguration configuration)
+        public AuthService(IConfiguration configuration, IUserService userService)
         {
             this.configuration = configuration;
+            this.userService = userService;
         }
 
-        public User Register(RegisterDto model)
+        public UserDto Register(RegisterDto model)
         {
-            var doesEmailExist = users.Any((u) => u.Email == model.Email);
+            var doesEmailExist = userService.CheckEmailExists(model.Email);
 
             if (doesEmailExist)
             {
@@ -31,23 +32,13 @@ namespace Auth.Service.Services
 
             // Hash the password before storing in database
 
-            var user = new User
-            {
-                Id = Guid.NewGuid(),
-                Email = model.Email,
-                Password = model.Password,
-                Role = model.Role
-            };
-
-            users.Add(user);
-
-            return user;
+            return userService.AddUser(model);
         }
 
         public UserTokenDto Login(LoginDto model)
         {
             // verify login credentials
-            var user = users.FirstOrDefault((u) => u.Email == model.Email && u.Password == u.Password);
+            var user = userService.GetUserByCredentials(model.Email, model.Password);
                 
             if (user == null)
             {

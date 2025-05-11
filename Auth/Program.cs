@@ -24,6 +24,7 @@ builder.Services.AddCors((options) =>
 
 #region DI
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 #endregion
 
 var app = builder.Build();
