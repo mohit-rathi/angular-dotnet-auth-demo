@@ -1,0 +1,12 @@
+D:\Angular Training\auth-and-route-protection\Auth.Service\bin\Debug\net8.0\Auth.Service.deps.json
+D:\Angular Training\auth-and-route-protection\Auth.Service\bin\Debug\net8.0\Auth.Service.dll
+D:\Angular Training\auth-and-route-protection\Auth.Service\bin\Debug\net8.0\Auth.Service.pdb
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\Auth.Service.csproj.AssemblyReference.cache
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\Auth.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\Auth.Service.AssemblyInfoInputs.cache
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\Auth.Service.AssemblyInfo.cs
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\Auth.Service.csproj.CoreCompileInputs.cache
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\Auth.Service.dll
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\refint\Auth.Service.dll
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\Auth.Service.pdb
+D:\Angular Training\auth-and-route-protection\Auth.Service\obj\Debug\net8.0\ref\Auth.Service.dll
