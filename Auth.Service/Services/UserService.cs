@@ -40,7 +40,19 @@ namespace Auth.Service.Services
             return user != null ? new UserDto
             {
                 Id = user.Id,
-                Email = email,
+                Email = user.Email,
+                Role = user.Role
+            } : null;
+        }
+
+        public UserDto GetUserById(Guid id)
+        {
+            var user = users.FirstOrDefault((u) => u.Id == id);
+
+            return user != null ? new UserDto
+            {
+                Id = user.Id,
+                Email = user.Email,
                 Role = user.Role
             } : null;
         }

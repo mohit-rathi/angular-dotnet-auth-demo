@@ -68,7 +68,7 @@ namespace Auth.Service.Services
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64),
                 new Claim("Id", id.ToString()),
                 new Claim("Email", email),
-                new Claim("Role", role.ToString())
+                new Claim("Role", Enum.GetName(typeof(Role), role))
             };
 
             // signing key

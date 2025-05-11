@@ -1,6 +1,7 @@
-﻿using Auth.Service.Interfaces;
+﻿using Auth.Service.Dtos;
+using Auth.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
+using System.Security.Claims;
 
 namespace Auth.Controllers
 {
@@ -8,23 +9,24 @@ namespace Auth.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IAuthService authService;
+        private readonly IUserService userService;
 
-        public UsersController(IAuthService authService)
+        public UsersController(IUserService userService)
         {
-            this.authService = authService;
+            this.userService = userService;
         }
 
         [HttpGet("Me")]
-        public void Me()
+        public ActionResult<UserDto> Me()
         {
-
+            var id = Guid.Parse(User.FindFirstValue("Id"));
+            return Ok(userService.GetUserById(id));
         }
 
         [HttpGet]
-        public void S()
+        public ActionResult<List<UserDto>> GetUsers()
         {
-            this.authService.
+            return Ok(userService.GetUsers());
         }
     }
 }
