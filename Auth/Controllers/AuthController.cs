@@ -16,13 +16,13 @@ namespace Auth.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register(RegisterDto model)
+        public ActionResult<UserDto> Register(RegisterDto model)
         {
             return Ok(authService.Register(model));
         }
 
         [HttpPost("login")]
-        public ActionResult Login(LoginDto model)
+        public ActionResult<UserTokenDto> Login(LoginDto model)
         {
             return Ok(authService.Login(model));
         }
