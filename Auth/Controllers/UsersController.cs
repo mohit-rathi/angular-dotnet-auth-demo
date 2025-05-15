@@ -1,5 +1,6 @@
 ﻿using Auth.Service.Dtos;
 using Auth.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -16,6 +17,7 @@ namespace Auth.Controllers
             this.userService = userService;
         }
 
+        [Authorize]
         [HttpGet("Me")]
         public ActionResult<UserDto> Me()
         {
@@ -23,6 +25,7 @@ namespace Auth.Controllers
             return Ok(userService.GetUserById(id));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult<List<UserDto>> GetUsers()
         {

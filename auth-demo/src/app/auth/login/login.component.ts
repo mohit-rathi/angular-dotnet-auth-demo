@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Login } from '../models/login.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +13,27 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly toastr = inject(ToastrService);
 
   formGroup!: FormGroup;
+  isRegisterRedirect = signal<boolean>(false);
+  isUnautheniticatedRedirect = signal<boolean>(false);
 
   ngOnInit(): void {
     this.prepareFormGroup();
+    this.route.queryParams.subscribe({
+      next: (params) => {
+        this.isRegisterRedirect.set(false);
+        this.isUnautheniticatedRedirect.set(false);
+        if (params['redirect'] == 'register') {
+          this.isRegisterRedirect.set(true);
+        }
+        if (params['redirect'] == 'unauthenticated') {
+          this.isUnautheniticatedRedirect.set(true);
+        }
+      }
+    });
   }
 
   prepareFormGroup() {
@@ -32,10 +49,11 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify({ email: response.email, role: response.role }));
-        this.router.navigate([]);
+        this.toastr.success('Login successful', 'Success');
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        console.error(error);
+        this.toastr.error(error.error.detail, 'Error');
       }
     });
   }

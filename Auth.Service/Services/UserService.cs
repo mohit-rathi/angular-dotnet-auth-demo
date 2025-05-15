@@ -15,7 +15,7 @@ namespace Auth.Service.Services
                 Id = Guid.NewGuid(),
                 Email = model.Email,
                 Password = model.Password,
-                Role = model.Role
+                Role = (Role)model.Role
             };
 
             users.Add(user);

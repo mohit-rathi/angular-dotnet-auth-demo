@@ -17,7 +17,7 @@ namespace Auth.Service.Services
 
         public AuthService(IConfiguration configuration, IUserService userService)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.GetSection("JWTConfig");
             this.userService = userService;
         }
 
@@ -65,7 +65,7 @@ namespace Auth.Service.Services
             // jwt claims
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Iat, now.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64),
+                new Claim(JwtRegisteredClaimNames.Iat, ((DateTimeOffset)now).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
                 new Claim("Id", id.ToString()),
                 new Claim("Email", email),
                 new Claim("Role", Enum.GetName(typeof(Role), role))

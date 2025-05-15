@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { BackofficeComponent } from './backoffice/backoffice.component';
+import { adminGuard } from '../auth/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'backoffice',
+        canActivate: [adminGuard],
         component: BackofficeComponent,
       },
     ],

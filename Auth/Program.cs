@@ -1,3 +1,4 @@
+using Auth.Middlewares;
 using Auth.Service.Interfaces;
 using Auth.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,7 +16,7 @@ builder.Services.AddCors((options) =>
 {
     options.AddPolicy("CorsPolicy", (policy) =>
     {
-        policy.WithOrigins("https://localhost:4200")
+        policy.WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -24,12 +25,14 @@ builder.Services.AddCors((options) =>
 
 #region DI
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 #endregion
 
 var app = builder.Build();
 
 #region Configure the HTTP request pipeline
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
@@ -71,6 +74,15 @@ void ConfigureJwtAuthService(IServiceCollection services)
             IssuerSigningKey = signingKey,
             RoleClaimType = "Role",
             ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine("Auth failed: ", context.Exception);
+                return Task.CompletedTask;
+            }
         };
     });
 }
